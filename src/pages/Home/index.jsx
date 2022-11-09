@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div className="container my-3">
-      <h1>Github Repository List</h1>
+      <h1>GitHub Repository List</h1>
       <form onSubmit={handleSubmit} className="row my-3">
         <div className="col-auto">
           <input type="text" className="form-control" placeholder="Enter github username" value={username} onChange={event => {setusername(event.target.value)}} />
