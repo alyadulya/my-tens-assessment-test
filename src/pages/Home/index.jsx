@@ -1,32 +1,39 @@
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRepos } from "../../app/features/Repos/action";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
+  const repos = useSelector(state => state.repos);
+  const [username, setusername] = useState('alyadulya');
 
-  const getRepos = async () => {
-    const response = await axios.get(`https://api.github.com/users/${username}/repos`);
-    setData(response.data);
-  }
+  useEffect(() => {
+    dispatch(fetchRepos(username))
+  }, [dispatch, username]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    getRepos();
   }
+
+  console.log(repos);
 
   return (
     <div>
       <div>
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="username" id="username" value={username} onChange={event => setUsername(event.target.value)} />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+         <form onSubmit={handleSubmit}>
+           <input type="text" name="username" id="username" value={username} onChange={event => {setusername(event.target.value)}} />
+           <input type="submit" value="Submit" />
+         </form>
+       </div>
       {
-        data.map((d, i) =>
-          <p>{d.name}</p>
-        )
+        repos.status === 'process' ?
+          <p>Loading</p>
+
+          :
+          
+          repos.data.map((repo, key) =>
+            <p>{repo.name}</p>
+          )
       }
     </div>
   )
