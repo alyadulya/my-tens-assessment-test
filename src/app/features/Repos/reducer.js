@@ -18,7 +18,7 @@ export default function repoReducer(state = initialState, {type, payload}) {
       return {...state, status: statusList.process }
 
     case ERROR_FETCHING_REPOS: 
-      return {...state, status: statusList.error }
+      return {...state, status: statusList.error, data: [] }
 
     case SUCCESS_FETCHING_REPOS: 
       return {...state, status: statusList.success, data: payload.data }
